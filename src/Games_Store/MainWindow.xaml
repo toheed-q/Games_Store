@@ -1,12 +1,53 @@
-﻿<Window x:Class="Games_Store.MainWindow"
+<Window x:Class="Games_Store.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Games_Store"
+        xmlns:views="clr-namespace:Games_Store.Views"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="Games Store" Height="750" Width="1100"
+        MinHeight="600" MinWidth="900"
+        Background="#0f0f1a"
+        WindowStartupLocation="CenterScreen">
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
 
+        <!-- Top Navigation Bar -->
+        <Border Grid.Row="0" Background="#1a1a2e" Padding="0"
+                BorderBrush="#2a2a4a" BorderThickness="0,0,0,1">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <!-- Logo / App Name -->
+                <StackPanel Grid.Column="0" Orientation="Horizontal" Margin="20,8">
+                    <TextBlock Text="&#xE7FC;" FontFamily="Segoe MDL2 Assets"
+                               FontSize="24" Foreground="#e94560"
+                               VerticalAlignment="Center" Margin="0,0,10,0" />
+                    <TextBlock Text="GAMES STORE" FontSize="20" FontWeight="Bold"
+                               Foreground="White" VerticalAlignment="Center" />
+                </StackPanel>
+
+                <!-- Navigation Buttons -->
+                <StackPanel Grid.Column="1" Orientation="Horizontal"
+                            HorizontalAlignment="Right" Margin="0,0,10,0">
+                    <Button x:Name="BtnStore" Content="Store"
+                            Style="{StaticResource NavButtonStyle}"
+                            Click="BtnStore_Click" />
+                    <Button x:Name="BtnAdmin" Content="Admin Panel"
+                            Style="{StaticResource NavButtonStyle}"
+                            Click="BtnAdmin_Click" />
+                </StackPanel>
+            </Grid>
+        </Border>
+
+        <!-- Content Area -->
+        <ContentControl x:Name="ContentArea" Grid.Row="1" />
     </Grid>
 </Window>

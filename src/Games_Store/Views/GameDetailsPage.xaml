@@ -1,0 +1,102 @@
+<UserControl x:Class="Games_Store.Views.GameDetailsPage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="clr-namespace:Games_Store.ViewModels">
+    <Grid Background="#0f0f1a">
+        <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+            <StackPanel Margin="30,20,30,30" MaxWidth="900" HorizontalAlignment="Center">
+
+                <!-- Back Button -->
+                <Button x:Name="BtnBack"
+                        Style="{StaticResource SecondaryButtonStyle}"
+                        HorizontalAlignment="Left" Margin="0,0,0,20"
+                        Padding="14,8" Click="OnBackClick">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="&#xE72B;" FontFamily="Segoe MDL2 Assets"
+                                   FontSize="14" VerticalAlignment="Center" Margin="0,0,8,0" />
+                        <TextBlock Text="Back to Store" FontSize="14" VerticalAlignment="Center" />
+                    </StackPanel>
+                </Button>
+
+                <!-- Hero Image -->
+                <Border x:Name="HeroImageBorder" CornerRadius="14" ClipToBounds="True"
+                        Height="380" Margin="0,0,0,25">
+                    <Border.Background>
+                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                            <GradientStop Color="#0f3460" Offset="0" />
+                            <GradientStop Color="#e94560" Offset="1" />
+                        </LinearGradientBrush>
+                    </Border.Background>
+                    <Grid>
+                        <TextBlock x:Name="HeroIcon" Text="&#xE7FC;"
+                                   FontFamily="Segoe MDL2 Assets" FontSize="80"
+                                   Foreground="#44ffffff"
+                                   HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        <Image x:Name="HeroImage" Stretch="Uniform" />
+                    </Grid>
+                </Border>
+
+                <!-- Game Info Card -->
+                <Border Background="#16213e" CornerRadius="12" Padding="30" Margin="0,0,0,20">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+
+                        <!-- Title -->
+                        <TextBlock x:Name="TxtTitle" Grid.Row="0"
+                                   FontSize="32" FontWeight="Bold" Foreground="White"
+                                   TextWrapping="Wrap" Margin="0,0,0,8" />
+
+                        <!-- Genre + Release Date row -->
+                        <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="0,0,0,16">
+                            <Border Background="#0f3460" CornerRadius="4" Padding="10,4" Margin="0,0,10,0">
+                                <TextBlock x:Name="TxtGenre" FontSize="13" Foreground="#aaa" />
+                            </Border>
+                            <TextBlock x:Name="TxtReleaseDate" FontSize="13" Foreground="#666"
+                                       VerticalAlignment="Center" />
+                        </StackPanel>
+
+                        <!-- Rating -->
+                        <StackPanel Grid.Row="2" Orientation="Horizontal" Margin="0,0,0,18">
+                            <TextBlock x:Name="TxtStars" FontSize="22"
+                                       Foreground="#ffd700" VerticalAlignment="Center" />
+                            <TextBlock x:Name="TxtRating" FontSize="18"
+                                       Foreground="#aaa" Margin="10,0,0,0"
+                                       VerticalAlignment="Center" />
+                            <TextBlock Text="/5" FontSize="14" Foreground="#555"
+                                       VerticalAlignment="Center" Margin="2,0,0,2" />
+                        </StackPanel>
+
+                        <!-- Divider -->
+                        <Border Grid.Row="3" Height="1" Background="#2a2a4a" Margin="0,0,0,18" />
+
+                        <!-- Description -->
+                        <TextBlock x:Name="TxtDescription" Grid.Row="4"
+                                   FontSize="15" Foreground="#ccc"
+                                   TextWrapping="Wrap" LineHeight="24"
+                                   Margin="0,0,0,20" />
+
+                        <!-- Price -->
+                        <StackPanel Grid.Row="5" Orientation="Horizontal">
+                            <TextBlock x:Name="TxtPrice" FontSize="36" FontWeight="Bold"
+                                       Foreground="#4ecca3" VerticalAlignment="Center" />
+                            <Border x:Name="FeaturedBadge" Background="#e94560" CornerRadius="6"
+                                    Padding="14,6" Margin="20,0,0,0"
+                                    VerticalAlignment="Center" Visibility="Collapsed">
+                                <TextBlock Text="FEATURED" FontSize="12" FontWeight="Bold"
+                                           Foreground="White" />
+                            </Border>
+                        </StackPanel>
+                    </Grid>
+                </Border>
+
+            </StackPanel>
+        </ScrollViewer>
+    </Grid>
+</UserControl>

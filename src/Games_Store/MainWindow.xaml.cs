@@ -1,24 +1,35 @@
-﻿using System.Text;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+using Games_Store.Models;
+using Games_Store.Views;
 
 namespace Games_Store
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
     public partial class MainWindow : Window
     {
         public MainWindow()
         {
             InitializeComponent();
+            ContentArea.Content = new PublicStore();
+        }
+
+        private void BtnStore_Click(object sender, RoutedEventArgs e)
+        {
+            NavigateToStore();
+        }
+
+        private void BtnAdmin_Click(object sender, RoutedEventArgs e)
+        {
+            ContentArea.Content = new AdminPanel();
+        }
+
+        public void NavigateToStore()
+        {
+            ContentArea.Content = new PublicStore();
+        }
+
+        public void NavigateToGameDetails(Game game)
+        {
+            ContentArea.Content = new GameDetailsPage(game);
         }
     }
 }
