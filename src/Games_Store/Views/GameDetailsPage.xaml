@@ -20,21 +20,19 @@
 
                 <!-- Hero Image -->
                 <Border x:Name="HeroImageBorder" CornerRadius="14" ClipToBounds="True"
-                        Height="380" Margin="0,0,0,25" Background="#1a1a2e">
+                        Height="380" Margin="0,0,0,25">
+                    <Border.Background>
+                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                            <GradientStop Color="#0f3460" Offset="0" />
+                            <GradientStop Color="#e94560" Offset="1" />
+                        </LinearGradientBrush>
+                    </Border.Background>
                     <Grid>
-                        <Border>
-                            <Border.Background>
-                                <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
-                                    <GradientStop Color="#0f3460" Offset="0" />
-                                    <GradientStop Color="#e94560" Offset="1" />
-                                </LinearGradientBrush>
-                            </Border.Background>
-                            <TextBlock x:Name="HeroIcon" Text="&#xE7FC;"
-                                       FontFamily="Segoe MDL2 Assets" FontSize="80"
-                                       Foreground="#44ffffff"
-                                       HorizontalAlignment="Center" VerticalAlignment="Center" />
-                        </Border>
-                        <Image x:Name="HeroImage" Stretch="UniformToFill" />
+                        <TextBlock x:Name="HeroIcon" Text="&#xE7FC;"
+                                   FontFamily="Segoe MDL2 Assets" FontSize="80"
+                                   Foreground="#44ffffff"
+                                   HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        <Image x:Name="HeroImage" Stretch="Uniform" Visibility="Collapsed" />
                     </Grid>
                 </Border>
 

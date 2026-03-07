@@ -39,17 +39,14 @@ namespace Games_Store.Views
                     bitmap.CreateOptions = BitmapCreateOptions.IgnoreColorProfile;
                     bitmap.EndInit();
                     HeroImage.Source = bitmap;
-                    HeroIcon.Visibility = Visibility.Collapsed;
+                    HeroImage.Visibility = Visibility.Visible;
                 }
                 catch
                 {
-                    HeroIcon.Visibility = Visibility.Visible;
+                    // Keep icon visible on error
                 }
             }
-            else
-            {
-                HeroIcon.Visibility = Visibility.Visible;
-            }
+            // If no image URL, icon stays visible by default
         }
 
         private static string GenerateStarText(double rating)

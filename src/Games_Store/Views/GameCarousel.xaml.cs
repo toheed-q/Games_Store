@@ -159,7 +159,7 @@ namespace Games_Store.Views
             };
 
             // Cover area: use image if URL exists, otherwise gradient + icon
-            UIElement coverChild;
+            Border coverBorder;
             bool hasImage = !string.IsNullOrEmpty(game.ImageUrl);
 
             if (hasImage)
@@ -174,18 +174,66 @@ namespace Games_Store.Views
                     bitmap.CreateOptions = BitmapCreateOptions.IgnoreColorProfile;
                     bitmap.EndInit();
 
-                    coverChild = new Image
+                    var grid = new Grid();
+                    grid.Children.Add(new Border
+                    {
+                        Background = gradientBrush,
+                        Child = new TextBlock
+                        {
+                            Text = "\uE7FC",
+                            FontFamily = new FontFamily("Segoe MDL2 Assets"),
+                            FontSize = 52,
+                            Foreground = new SolidColorBrush(Color.FromArgb(120, 255, 255, 255)),
+                            HorizontalAlignment = HorizontalAlignment.Center,
+                            VerticalAlignment = VerticalAlignment.Center
+                        }
+                    });
+                    grid.Children.Add(new Image
                     {
                         Source = bitmap,
                         Stretch = Stretch.UniformToFill,
                         HorizontalAlignment = HorizontalAlignment.Center,
                         VerticalAlignment = VerticalAlignment.Center
+                    });
+
+                    coverBorder = new Border
+                    {
+                        Height = 180,
+                        Background = Brushes.Black,
+                        CornerRadius = new CornerRadius(12, 12, 0, 0),
+                        ClipToBounds = true,
+                        Child = grid
                     };
                 }
                 catch
                 {
-                    hasImage = false;
-                    coverChild = new TextBlock
+                    coverBorder = new Border
+                    {
+                        Height = 180,
+                        Background = gradientBrush,
+                        CornerRadius = new CornerRadius(12, 12, 0, 0),
+                        ClipToBounds = true,
+                        Child = new TextBlock
+                        {
+                            Text = "\uE7FC",
+                            FontFamily = new FontFamily("Segoe MDL2 Assets"),
+                            FontSize = 52,
+                            Foreground = new SolidColorBrush(Color.FromArgb(120, 255, 255, 255)),
+                            HorizontalAlignment = HorizontalAlignment.Center,
+                            VerticalAlignment = VerticalAlignment.Center
+                        }
+                    };
+                }
+            }
+            else
+            {
+                coverBorder = new Border
+                {
+                    Height = 180,
+                    Background = gradientBrush,
+                    CornerRadius = new CornerRadius(12, 12, 0, 0),
+                    ClipToBounds = true,
+                    Child = new TextBlock
                     {
                         Text = "\uE7FC",
                         FontFamily = new FontFamily("Segoe MDL2 Assets"),
@@ -193,30 +241,9 @@ namespace Games_Store.Views
                         Foreground = new SolidColorBrush(Color.FromArgb(120, 255, 255, 255)),
                         HorizontalAlignment = HorizontalAlignment.Center,
                         VerticalAlignment = VerticalAlignment.Center
-                    };
-                }
-            }
-            else
-            {
-                coverChild = new TextBlock
-                {
-                    Text = "\uE7FC",
-                    FontFamily = new FontFamily("Segoe MDL2 Assets"),
-                    FontSize = 52,
-                    Foreground = new SolidColorBrush(Color.FromArgb(120, 255, 255, 255)),
-                    HorizontalAlignment = HorizontalAlignment.Center,
-                    VerticalAlignment = VerticalAlignment.Center
+                    }
                 };
             }
-
-            var coverBorder = new Border
-            {
-                Height = 180,
-                Background = hasImage ? Brushes.Black : gradientBrush,
-                CornerRadius = new CornerRadius(12, 12, 0, 0),
-                ClipToBounds = true,
-                Child = coverChild
-            };
 
             // Rating stars
             var starText = GenerateStarText(game.Rating);
