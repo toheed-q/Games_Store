@@ -158,27 +158,43 @@ namespace Games_Store.Views
                 }
             };
 
-            // Cover area: use image if file exists, otherwise gradient + icon
+            // Cover area: use image if URL exists, otherwise gradient + icon
             UIElement coverChild;
-            bool hasImage = !string.IsNullOrEmpty(game.ImageUrl) && File.Exists(game.ImageUrl);
+            bool hasImage = !string.IsNullOrEmpty(game.ImageUrl);
 
             if (hasImage)
             {
-                var bitmap = new BitmapImage();
-                bitmap.BeginInit();
-                bitmap.UriSource = new Uri(game.ImageUrl, UriKind.Absolute);
-                bitmap.DecodePixelWidth = (int)CardWidth;
-                bitmap.CacheOption = BitmapCacheOption.OnLoad;
-                bitmap.EndInit();
-                bitmap.Freeze();
-
-                coverChild = new Image
+                try
                 {
-                    Source = bitmap,
-                    Stretch = Stretch.UniformToFill,
-                    HorizontalAlignment = HorizontalAlignment.Center,
-                    VerticalAlignment = VerticalAlignment.Center
-                };
+                    var bitmap = new BitmapImage();
+                    bitmap.BeginInit();
+                    bitmap.UriSource = new Uri(game.ImageUrl, UriKind.Absolute);
+                    bitmap.DecodePixelWidth = (int)CardWidth;
+                    bitmap.CacheOption = BitmapCacheOption.OnLoad;
+                    bitmap.CreateOptions = BitmapCreateOptions.IgnoreColorProfile;
+                    bitmap.EndInit();
+
+                    coverChild = new Image
+                    {
+                        Source = bitmap,
+                        Stretch = Stretch.UniformToFill,
+                        HorizontalAlignment = HorizontalAlignment.Center,
+                        VerticalAlignment = VerticalAlignment.Center
+                    };
+                }
+                catch
+                {
+                    hasImage = false;
+                    coverChild = new TextBlock
+                    {
+                        Text = "\uE7FC",
+                        FontFamily = new FontFamily("Segoe MDL2 Assets"),
+                        FontSize = 52,
+                        Foreground = new SolidColorBrush(Color.FromArgb(120, 255, 255, 255)),
+                        HorizontalAlignment = HorizontalAlignment.Center,
+                        VerticalAlignment = VerticalAlignment.Center
+                    };
+                }
             }
             else
             {

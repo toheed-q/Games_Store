@@ -27,17 +27,21 @@ namespace Games_Store.Views
             if (game.IsFeatured)
                 FeaturedBadge.Visibility = Visibility.Visible;
 
-            // Load image if file exists
-            if (!string.IsNullOrEmpty(game.ImageUrl) && File.Exists(game.ImageUrl))
+            // Load image from URL or local path
+            if (!string.IsNullOrEmpty(game.ImageUrl))
             {
-                var bitmap = new BitmapImage();
-                bitmap.BeginInit();
-                bitmap.UriSource = new Uri(game.ImageUrl, UriKind.Absolute);
-                bitmap.DecodePixelWidth = 900;
-                bitmap.CacheOption = BitmapCacheOption.OnLoad;
-                bitmap.EndInit();
-                bitmap.Freeze();
-                HeroImage.Source = bitmap;
+                try
+                {
+                    var bitmap = new BitmapImage();
+                    bitmap.BeginInit();
+                    bitmap.UriSource = new Uri(game.ImageUrl, UriKind.Absolute);
+                    bitmap.DecodePixelWidth = 900;
+                    bitmap.CacheOption = BitmapCacheOption.OnLoad;
+                    bitmap.CreateOptions = BitmapCreateOptions.IgnoreColorProfile;
+                    bitmap.EndInit();
+                    HeroImage.Source = bitmap;
+                }
+                catch { }
             }
         }
 

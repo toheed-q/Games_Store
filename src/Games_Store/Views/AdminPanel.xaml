@@ -145,7 +145,7 @@
                             <ColumnDefinition Width="Auto" />
                         </Grid.ColumnDefinitions>
                         <TextBox Grid.Column="0" Text="{Binding FormImageUrl, UpdateSourceTrigger=PropertyChanged}"
-                                 Style="{StaticResource FormTextBoxStyle}" IsReadOnly="True" />
+                                 Style="{StaticResource FormTextBoxStyle}" />
                         <Button Grid.Column="1" Content="Browse..."
                                 Command="{Binding BrowseImageCommand}"
                                 Style="{StaticResource SecondaryButtonStyle}"
