@@ -35,13 +35,20 @@ namespace Games_Store.Views
                     var bitmap = new BitmapImage();
                     bitmap.BeginInit();
                     bitmap.UriSource = new Uri(game.ImageUrl, UriKind.Absolute);
-                    bitmap.DecodePixelWidth = 900;
                     bitmap.CacheOption = BitmapCacheOption.OnLoad;
                     bitmap.CreateOptions = BitmapCreateOptions.IgnoreColorProfile;
                     bitmap.EndInit();
                     HeroImage.Source = bitmap;
+                    HeroIcon.Visibility = Visibility.Collapsed;
                 }
-                catch { }
+                catch
+                {
+                    HeroIcon.Visibility = Visibility.Visible;
+                }
+            }
+            else
+            {
+                HeroIcon.Visibility = Visibility.Visible;
             }
         }
 
