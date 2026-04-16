@@ -8,53 +8,138 @@
         mc:Ignorable="d"
         Title="Games Store" Height="750" Width="1100"
         MinHeight="600" MinWidth="900"
-        Background="#0f0f1a"
+        WindowStyle="None"
+        AllowsTransparency="True"
+        ResizeMode="CanResize"
+        Background="Transparent"
         WindowStartupLocation="CenterScreen">
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="*" />
-        </Grid.RowDefinitions>
 
-        <!-- Top Navigation Bar -->
-        <Border Grid.Row="0" Background="#1a1a2e" Padding="0"
-                BorderBrush="#2a2a4a" BorderThickness="0,0,0,1">
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="*" />
-                </Grid.ColumnDefinitions>
+    <Border Background="#0f0f1a" BorderBrush="#2a2a4a" BorderThickness="1">
+        <Border.Effect>
+            <DropShadowEffect Color="#000000" BlurRadius="20" ShadowDepth="0" Opacity="0.5" />
+        </Border.Effect>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="48" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
 
-                <!-- Logo / App Name -->
-                <StackPanel Grid.Column="0" Orientation="Horizontal" Margin="20,8">
-                    <TextBlock Text="&#xE7FC;" FontFamily="Segoe MDL2 Assets"
-                               FontSize="24" Foreground="#e94560"
-                               VerticalAlignment="Center" Margin="0,0,10,0" />
-                    <TextBlock Text="GAMES STORE" FontSize="20" FontWeight="Bold"
-                               Foreground="White" VerticalAlignment="Center" />
-                </StackPanel>
+            <!-- Custom Title Bar (drag region) -->
+            <Border Grid.Row="0" Background="#1a1a2e"
+                    BorderBrush="#2a2a4a" BorderThickness="0,0,0,1"
+                    MouseLeftButtonDown="OnTitleBarDrag">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
 
-                <!-- Navigation Buttons -->
-                <StackPanel Grid.Column="1" Orientation="Horizontal"
-                            HorizontalAlignment="Right" Margin="0,0,10,0">
-                    <Button x:Name="BtnStore" Content="Store"
-                            Style="{StaticResource NavButtonStyle}"
-                            Click="BtnStore_Click" />
-                    <Button x:Name="BtnAdmin" Content="Admin Panel"
-                            Style="{StaticResource NavButtonStyle}"
-                            Click="BtnAdmin_Click" />
-                    <!-- User info + logout -->
-                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="10,0,10,0">
-                        <TextBlock x:Name="TxtUsername" Foreground="#aaa" FontSize="13"
-                                   VerticalAlignment="Center" Margin="0,0,12,0" />
-                        <Button Content="Logout" Style="{StaticResource NavButtonStyle}"
-                                Click="BtnLogout_Click" />
+                    <!-- Logo -->
+                    <StackPanel Grid.Column="0" Orientation="Horizontal" Margin="18,0,0,0" VerticalAlignment="Center">
+                        <TextBlock Text="&#xE7FC;" FontFamily="Segoe MDL2 Assets"
+                                   FontSize="20" Foreground="#e94560"
+                                   VerticalAlignment="Center" Margin="0,0,10,0" />
+                        <TextBlock Text="GAMES STORE" FontSize="16" FontWeight="Bold"
+                                   Foreground="White" VerticalAlignment="Center" />
                     </StackPanel>
-                </StackPanel>
-            </Grid>
-        </Border>
 
-        <!-- Content Area -->
-        <ContentControl x:Name="ContentArea" Grid.Row="1" />
-    </Grid>
+                    <!-- Nav Buttons (center-right) -->
+                    <StackPanel Grid.Column="1" Orientation="Horizontal"
+                                HorizontalAlignment="Right" VerticalAlignment="Center">
+                        <Button x:Name="BtnStore" Content="Store"
+                                Style="{StaticResource NavButtonStyle}"
+                                Click="BtnStore_Click" />
+                        <Button x:Name="BtnAdmin" Content="Admin Panel"
+                                Style="{StaticResource NavButtonStyle}"
+                                Click="BtnAdmin_Click" />
+
+                        <!-- User chip -->
+                        <Border Background="#0f0f1a" CornerRadius="20"
+                                BorderBrush="#2a2a4a" BorderThickness="1"
+                                Padding="10,4" Margin="6,0" VerticalAlignment="Center">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="&#xE77B;" FontFamily="Segoe MDL2 Assets"
+                                           FontSize="12" Foreground="#e94560"
+                                           VerticalAlignment="Center" Margin="0,0,6,0" />
+                                <TextBlock x:Name="TxtUsername" Foreground="#ccc"
+                                           FontSize="13" VerticalAlignment="Center" />
+                            </StackPanel>
+                        </Border>
+
+                        <Button Content="Logout" Style="{StaticResource NavButtonStyle}"
+                                Click="BtnLogout_Click" Margin="0,0,4,0" />
+                    </StackPanel>
+
+                    <!-- Window Controls -->
+                    <StackPanel Grid.Column="2" Orientation="Horizontal"
+                                VerticalAlignment="Center" Margin="0,0,6,0">
+
+                        <!-- Minimize -->
+                        <Button Click="BtnMinimize_Click" Width="36" Height="36"
+                                Cursor="Hand" BorderThickness="0" Background="Transparent"
+                                ToolTip="Minimize">
+                            <Button.Template>
+                                <ControlTemplate TargetType="Button">
+                                    <Border x:Name="bg" Background="{TemplateBinding Background}" CornerRadius="6">
+                                        <TextBlock Text="&#xE921;" FontFamily="Segoe MDL2 Assets"
+                                                   FontSize="11" Foreground="#888"
+                                                   HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                    </Border>
+                                    <ControlTemplate.Triggers>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter TargetName="bg" Property="Background" Value="#2a2a4a" />
+                                        </Trigger>
+                                    </ControlTemplate.Triggers>
+                                </ControlTemplate>
+                            </Button.Template>
+                        </Button>
+
+                        <!-- Restore/Maximize -->
+                        <Button x:Name="BtnMaxRestore" Click="BtnMaxRestore_Click" Width="36" Height="36"
+                                Cursor="Hand" BorderThickness="0" Background="Transparent"
+                                ToolTip="Maximize">
+                            <Button.Template>
+                                <ControlTemplate TargetType="Button">
+                                    <Border x:Name="bg" Background="{TemplateBinding Background}" CornerRadius="6">
+                                        <TextBlock x:Name="icon" Text="&#xE922;" FontFamily="Segoe MDL2 Assets"
+                                                   FontSize="11" Foreground="#888"
+                                                   HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                    </Border>
+                                    <ControlTemplate.Triggers>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter TargetName="bg" Property="Background" Value="#2a2a4a" />
+                                        </Trigger>
+                                    </ControlTemplate.Triggers>
+                                </ControlTemplate>
+                            </Button.Template>
+                        </Button>
+
+                        <!-- Close -->
+                        <Button Click="BtnClose_Click" Width="36" Height="36"
+                                Cursor="Hand" BorderThickness="0" Background="Transparent"
+                                ToolTip="Close">
+                            <Button.Template>
+                                <ControlTemplate TargetType="Button">
+                                    <Border x:Name="bg" Background="{TemplateBinding Background}" CornerRadius="6">
+                                        <TextBlock Text="&#xE8BB;" FontFamily="Segoe MDL2 Assets"
+                                                   FontSize="11" Foreground="#888"
+                                                   HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                    </Border>
+                                    <ControlTemplate.Triggers>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter TargetName="bg" Property="Background" Value="#e94560" />
+                                        </Trigger>
+                                    </ControlTemplate.Triggers>
+                                </ControlTemplate>
+                            </Button.Template>
+                        </Button>
+                    </StackPanel>
+                </Grid>
+            </Border>
+
+            <!-- Content Area -->
+            <ContentControl x:Name="ContentArea" Grid.Row="1" />
+        </Grid>
+    </Border>
 </Window>

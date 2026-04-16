@@ -1,3 +1,4 @@
+using System.IO;
 using Games_Store.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -10,8 +11,8 @@ namespace Games_Store.Data
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(
-                "Server=(localdb)\\MSSQLLocalDB;Database=GamesStoreDb;Trusted_Connection=True;");
+            var dbPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "GamesStore.db");
+            optionsBuilder.UseSqlite($"Data Source={dbPath}");
         }
 
         public bool AdminExists() => Users.Any(u => u.Role == "Admin");
@@ -27,7 +28,6 @@ namespace Games_Store.Data
             modelBuilder.Entity<Game>(entity =>
             {
                 entity.HasKey(g => g.Id);
-                entity.Property(g => g.Price).HasColumnType("decimal(18,2)");
             });
 
             // Seed some initial games
