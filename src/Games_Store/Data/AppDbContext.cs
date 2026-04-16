@@ -6,6 +6,7 @@ namespace Games_Store.Data
     public class AppDbContext : DbContext
     {
         public DbSet<Game> Games { get; set; }
+        public DbSet<User> Users { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -13,8 +14,16 @@ namespace Games_Store.Data
                 "Server=(localdb)\\MSSQLLocalDB;Database=GamesStoreDb;Trusted_Connection=True;");
         }
 
+        public bool AdminExists() => Users.Any(u => u.Role == "Admin");
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<User>(entity =>
+            {
+                entity.HasKey(u => u.Id);
+                entity.HasIndex(u => u.Username).IsUnique();
+            });
+
             modelBuilder.Entity<Game>(entity =>
             {
                 entity.HasKey(g => g.Id);

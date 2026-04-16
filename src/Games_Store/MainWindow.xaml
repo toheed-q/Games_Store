@@ -43,6 +43,13 @@
                     <Button x:Name="BtnAdmin" Content="Admin Panel"
                             Style="{StaticResource NavButtonStyle}"
                             Click="BtnAdmin_Click" />
+                    <!-- User info + logout -->
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="10,0,10,0">
+                        <TextBlock x:Name="TxtUsername" Foreground="#aaa" FontSize="13"
+                                   VerticalAlignment="Center" Margin="0,0,12,0" />
+                        <Button Content="Logout" Style="{StaticResource NavButtonStyle}"
+                                Click="BtnLogout_Click" />
+                    </StackPanel>
                 </StackPanel>
             </Grid>
         </Border>

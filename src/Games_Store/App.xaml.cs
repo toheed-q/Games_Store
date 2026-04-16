@@ -1,5 +1,6 @@
 using System.Windows;
 using Games_Store.Data;
+using Games_Store.Views;
 using Microsoft.EntityFrameworkCore;
 
 namespace Games_Store
@@ -9,10 +10,34 @@ namespace Games_Store
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
+            ShutdownMode = ShutdownMode.OnExplicitShutdown;
 
-            // Create database if it doesn't exist, with seed data
             using var context = new AppDbContext();
-            context.Database.EnsureCreated();
+            context.Database.Migrate();
+
+            // First time: no admin exists → force admin creation
+            if (!context.AdminExists())
+            {
+                var setup = new CreateAdminWindow();
+                if (setup.ShowDialog() != true)
+                {
+                    Shutdown();
+                    return;
+                }
+            }
+
+            // Normal flow: show login
+            var login = new LoginWindow();
+            if (login.ShowDialog() == true)
+            {
+                var main = new MainWindow();
+                main.Closed += (_, _) => Shutdown();
+                main.Show();
+            }
+            else
+            {
+                Shutdown();
+            }
         }
     }
 }
