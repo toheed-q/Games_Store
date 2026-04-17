@@ -11,7 +11,10 @@ namespace Games_Store.Data
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            var dbPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "GamesStore.db");
+            var appData = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+            var dbDir = Path.Combine(appData, "GamesStore");
+            Directory.CreateDirectory(dbDir);
+            var dbPath = Path.Combine(dbDir, "GamesStore.db");
             optionsBuilder.UseSqlite($"Data Source={dbPath}");
         }
 
